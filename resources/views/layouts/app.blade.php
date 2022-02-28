@@ -55,6 +55,9 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="{{ route('admin.posts.create') }}">Aggiungi un post</a>
+                            </li>
+                            <li>
                                 <div aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
