@@ -5,49 +5,49 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 use App\Model\Post;
 use App\Http\Controllers\Controller;
+use App\Model\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(20);
-        return view('admin.posts.index', compact('posts'));
+        $posts = Post::orderBy('created_at', 'desc')->paginate(20);
+        return view('admin.posts.index', ['posts' => $posts]);
+    }
+
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+        return view('admin.posts.index', ['posts' => $posts]);
     }
 
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-
-        ]);
-
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
 
-        $slug = Str::slug($data['title'], '-');
-        $postPresente = Post::where('slug', $slug)->first();
+        $postValidate = $request->validate(
+            [
+                'title' => 'required|max:240',
+                'content' => 'required',
+                'category_id' => 'exists:App\Model\Category,id'
+            ]
+        );
 
-        $c = 0;
-        while ($postPresente) {
-            $slug = $slug . '-' . $c;
-            $postPresente = Post::where('slug', $slug)->first();
-            $c++;
-        }
+        $post = new Post();
+        $post->fill($data);
+        $post->slug = $post->createSlug($data['title']);
+        $post->save();
 
-        $newPost = new Post();
-        
-        // $data['slug'] = 'slug';
-        $newPost->fill($data);
-        $newPost->slug = $slug;
-        $newPost->save();
-
-        return redirect()->route('admin.posts.show', ['post' => $newPost]);
+        return redirect()->route('admin.posts.show', $post->slug);
 
     }
 
@@ -56,37 +56,57 @@ class PostController extends Controller
         return view('admin.posts.show', ['post' => $post]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+        $categories = Category::all();
+
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
+
+        $postValidate = $request->validate(
+            [
+                'title' => 'required|max:240',
+                'content' => 'required',
+                'category_id' => 'exists:App\Model\Category,id'
+            ]
+        );
+
+        if ($data['title'] != $post->title) {
+            $post->title = $data['title'];
+            $post->slug = $post->createSlug($data['title']);
+        }
+        if ($data['content'] != $post->content) {
+            $post->content = $data['content'];
+        }
+        if ($data['category_id'] != $post->category_id) {
+            $post->category_id = $data['category_id'];
+        }
+
+        $post->update();
+
+        return redirect()->route('admin.posts.show', $post);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
+        }
     }
-}
