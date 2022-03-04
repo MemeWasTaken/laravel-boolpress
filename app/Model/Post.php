@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Model;
-
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -22,6 +22,11 @@ class Post extends Model
 
     public function category() {
         return $this->belongsTo('App\Model\Category');
+    }
+
+    public function tags() 
+    {
+        return $this->belongsToMany('App\Model\Tag')->withTimestamps();
     }
 
     public function getRouteKeyName() {

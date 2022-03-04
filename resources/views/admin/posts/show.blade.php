@@ -21,7 +21,15 @@
         </div>
         <div class="row">
             <div class="col">
-                {{ $post->content }}
+                Content: {{ $post->content }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Tags:
+                @foreach ($post->tags()->get() as $tag)
+                    {{ $tag->name }}
+                @endforeach
             </div>
         </div>
     </div>
