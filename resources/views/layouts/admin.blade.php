@@ -15,52 +15,72 @@
 
 <body>
     <div id="app">
-        @include('partials.header')
-
-        <main class="py-4">
+        
+        <main class="body-max">
             <div class="container-fluid">
                 <div class="row">
-                    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                        <div class="position-sticky pt-3">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page"
-                                        href="{{ route('admin.posts.create') }}">
-                                        Add Post
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ route('admin.home') }}">
-                                        <i class="bi bi-house"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.categories.index') }}">
-                                        <i class="bi bi-files"></i>
-                                        All Categories
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.posts.index') }}">
-                                        <i class="bi bi-files"></i>
-                                        All Posts
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.posts.indexUser') }}">
-                                        <i class="bi bi-files"></i>
-                                        My Posts
-                                    </a>
-                                </li>
+                    
+                    <nav class="d-flex flex-column flex-shrink-0 text-white bg-dark side-bar">
+                        <a href="{{ route('guest.index') }}" class="d-flex py-2 ps-2 link-dark text-decoration-none navbar-brand flex-column justify-content-center align-items-center mx-0" data-bs-toggle="tooltip" data-bs-placement="right">
+                          <i class="fa-brands fa-laravel"></i>
+                          <span class="sidebar-brand"> Laravel </span>
+                        </a>
+                        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('admin.home') }}" class="nav-link active py-3" aria-current="page" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <i class="bi bi-activity"></i>
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('admin.categories.index') }}" class="nav-link py-3" title="All Categories" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <i class="bi bi-files"></i>
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('admin.posts.index') }}" class="nav-link py-3" title="All Posts" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <i class="bi bi-stickies"></i>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('admin.posts.indexUser') }}" class="nav-link py-3" title="My Posts" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <i class="bi bi-sticky"></i>
+                                </a>
+                            </li>
+                            
+                            
+                            <li class="nav-item">
+                                <a href="{{ route('admin.posts.create') }}" class="nav-link py-3" title="Add Post" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <i class="bi bi-plus-circle"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none nav-link" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-check"></i>
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                                <li><a class="dropdown-item" href="#">New project...</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Sign out</a></li>
                             </ul>
                         </div>
                     </nav>
-                    <div class="col">
+                    
+                    <div class="col px-0">
+                        @include('partials.header')
                         @yield('content')
                     </div>
                 </div>
-
+            </div>
         </main>
     </div>
 </body>

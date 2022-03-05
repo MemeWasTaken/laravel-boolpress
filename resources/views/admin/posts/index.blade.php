@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col">
                 <h1>
-                    Posts
+                    {{ $pageTitle }}
                 </h1>
             </div>
         </div>

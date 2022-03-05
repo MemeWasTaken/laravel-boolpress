@@ -12,14 +12,16 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(20);
-        return view('admin.posts.index', ['posts' => $posts]);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(12);
+        $pageTitle = 'All Post';
+        return view('admin.posts.index', ['posts' => $posts, 'pageTitle' => $pageTitle]);
     }
 
     public function indexUser()
     {
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
-        return view('admin.posts.index', ['posts' => $posts]);
+        $pageTitle = 'My Post';
+        return view('admin.posts.index', ['posts' => $posts, 'pageTitle' => $pageTitle]);
     }
 
     public function create()

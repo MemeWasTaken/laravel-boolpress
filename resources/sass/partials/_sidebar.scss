@@ -1,0 +1,31 @@
+.body-max {
+    max-width: 100%;
+    max-height: 100vh;
+    
+}
+.side-bar {
+    width: 4.5rem;
+    height: 100vh;
+}
+
+.bi-activity::before,
+.bi-files::before,
+.bi-stickies::before,
+.bi-sticky::before,
+.bi-plus-circle::before {
+    font-size: 1.4em;
+}
+.fa-brands.fa-laravel::before,
+.bi-person-check::before {
+    font-size: 1.4em;
+    color: #2a73b0;
+}
+
+.dropdown {
+    border-top: 1px solid #2a73b0;
+}
+
+.sidebar-brand {
+    color: #2a73b0;
+    font-size: 0.5em;
+}

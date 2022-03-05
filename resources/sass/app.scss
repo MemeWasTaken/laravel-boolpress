@@ -8,3 +8,9 @@
 @import '~bootstrap/scss/bootstrap';
 
 @import "~bootstrap-icons/font/bootstrap-icons.scss";
+
+// Partials
+@import "partials/sidebar";
+
+// FontAwesome
+@import '~@fortawesome/fontawesome-free/css/all.css';
