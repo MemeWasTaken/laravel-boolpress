@@ -21,6 +21,11 @@
         </div>
         <div class="row">
             <div class="col">
+                <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 Content: {{ $post->content }}
             </div>
         </div>

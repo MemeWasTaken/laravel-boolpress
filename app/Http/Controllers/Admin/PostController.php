@@ -7,6 +7,7 @@ use App\Model\Category;
 use App\Model\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -19,7 +20,7 @@ class PostController extends Controller
 
     public function indexUser()
     {
-        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(12);
         $pageTitle = 'My Post';
         return view('admin.posts.index', ['posts' => $posts, 'pageTitle' => $pageTitle]);
     }
@@ -41,9 +42,15 @@ class PostController extends Controller
                 'title' => 'required|max:240',
                 'content' => 'required',
                 'category_id' => 'exists:App\Model\Category,id',
-                'tags.*' => 'nullable|exists:App\Model\Tag,id'
+                'tags.*' => 'nullable|exists:App\Model\Tag,id',
+                'image' => 'nullable|image'
             ]
         );
+
+        if(!empty($data["image"])) {
+            $img_path = Storage::put("uploads", $data["image"]);
+            $data["image"] = $img_path;
+        }
 
         $post = new Post();
         $post->fill($data);
