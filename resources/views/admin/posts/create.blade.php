@@ -65,6 +65,11 @@
                 <div class="mb-3">
                     <label for="image" class="form-label">Upload your Photo</label>
                     <input class="form-control" type="file" id="image" name="image">
+                    @error('image')
+                        <div class="alert alert-danger mt-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
                   </div>
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>

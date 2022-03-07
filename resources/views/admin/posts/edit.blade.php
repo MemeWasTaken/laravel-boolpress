@@ -90,8 +90,12 @@
 
                 @if (!empty($post->image))
                     <div class="mb-3">
-                        <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}"
-                            alt="{{ $post->title }}">
+                        <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+                        @error('content')
+                            <div class="alert alert-danger mt-3">
+                                {{ $message }}
+                            </div>
+                    @enderror
                     </div>
                 @endif
                 <div class="mb-3">
