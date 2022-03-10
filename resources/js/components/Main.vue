@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col" v-for="(post, index) in posts" :key="index">
+            <div class="col" v-for="(post, index) in cards.posts" :key="index">
                 <div class="card">
                     <img :src="'/storage/'+post.image" class="card-img-top" :alt="post.title">
                     <div class="card-body">

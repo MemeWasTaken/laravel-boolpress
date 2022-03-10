@@ -18,4 +18,15 @@ class PostController extends Controller
             'results' => ['posts' => $posts],
         ]);
     }
+
+    public function inRandomOrder()
+    {
+        $posts = Post::inRandomOrder()->limit(4)->get();
+        return response()->json([
+            'response' => true,
+            'results' => [
+                'data' => $posts
+            ],
+        ]);
+    }
 }

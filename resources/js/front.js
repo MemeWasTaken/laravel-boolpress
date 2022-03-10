@@ -8,6 +8,45 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import App from './views/App';
+import Home from './pages/Home';
+import About from './pages/About';
+import Post from './pages/Post';
+import Posts from './pages/Posts';
+import Contacts from './pages/Contacts';
+
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/posts',
+            name: 'posts',
+            component: Posts
+        },
+        {
+            path: '/posts/:id',
+            name: 'post',
+            component: Post
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: About
+        },
+        {
+            path: '/contacts',
+            name: 'contacts',
+            component: Contacts
+        },
+    ]
+})
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,4 +57,5 @@ import App from './views/App';
 const app = new Vue({
     el: '#app',
     render: h => h(App),
+    router
 });
