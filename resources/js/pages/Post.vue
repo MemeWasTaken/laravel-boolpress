@@ -30,7 +30,7 @@
     },
     methods: {
       getPost(url){
-          Axios.get(url).then(
+          Axios.get(url, {headers: {'Authorization': 'Bearer uhio793yni34hk'}}).then(
             (result) => {
               console.log(result);
               this.post = result.data.results.data;
